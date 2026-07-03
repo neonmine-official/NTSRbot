@@ -22,7 +22,7 @@
             overflow: hidden;
         }
 
-        /* 🎬 1. 5-წამიანი მისალმების ეფექტი */
+        /* 🎬 1. 5-წამიანი მისალმების ეკრანი */
         #intro-screen {
             position: fixed;
             top: 0;
@@ -35,7 +35,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.8s ease;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out; /* აი ეს აკლდა! */
         }
 
         .intro-logo {
@@ -83,6 +84,7 @@
             align-items: center;
             height: 100vh;
             padding: 20px;
+            width: 100%;
         }
 
         .welcome-box {
@@ -122,6 +124,7 @@
             justify-content: space-between;
             height: 100vh;
             padding: 20px 15px 90px 15px;
+            width: 100%;
         }
 
         .top-bar {
@@ -328,6 +331,7 @@
 </head>
 <body>
 
+    <!-- 🎬 1. ინტრო ეკრანი -->
     <div id="intro-screen">
         <div class="intro-logo">
             <span style="font-size:40px;">⚡</span>
@@ -338,6 +342,7 @@
         </div>
     </div>
 
+    <!-- 🚪 2. „ჩემი სივრცე“ -->
     <div id="space-screen">
         <div class="welcome-box">
             <h2>მოგესალმებით</h2>
@@ -346,6 +351,7 @@
         <button class="enter-btn" onclick="openAppSpace()">ჩემი სივრცე</button>
     </div>
 
+    <!-- 📱 3. მთავარი აპლიკაცია -->
     <div id="main-app">
         <div class="top-bar">
             <h3>მიმდინარე ბალანსი</h3>
@@ -354,6 +360,7 @@
             </div>
         </div>
 
+        <!-- სვეტი 1: პროფილი -->
         <div id="window-profile" class="tab-window">
             <div class="profile-card">
                 <div class="profile-title">პროფილი</div>
@@ -363,6 +370,7 @@
             </div>
         </div>
 
+        <!-- სვეტი 2: მაინერი -->
         <div id="window-wheel" class="tab-window active">
             <div class="wheel-container">
                 <div class="neon-orb" id="orb-animation"></div>
@@ -373,6 +381,7 @@
             </div>
         </div>
 
+        <!-- სვეტი 3: სტატისტიკა -->
         <div id="window-stats" class="tab-window">
             <div class="stats-card">
                 <div style="font-weight:800; border-bottom:1px solid #00ff66; padding-bottom:10px;">ლაივ გატანები</div>
@@ -380,6 +389,7 @@
             </div>
         </div>
 
+        <!-- მენიუ -->
         <div class="bottom-navbar">
             <div id="nav-profile" class="nav-column" onclick="switchTab('profile')">
                 <span>👤 პროფილი</span>
@@ -393,6 +403,7 @@
         </div>
     </div>
 
+    <!-- რეკლამა -->
     <div id="ad-modal">
         <div class="ad-box">
             <h3>სპონსორის რეკლამა</h3>
@@ -405,12 +416,14 @@
         let isMining = false;
         let remainingTime = 7200;
 
+        // ზუსტად 5 წამში ინტრო ეკრანი ქრება და იხსნება „ჩემი სივრცე“
         setTimeout(() => {
-            document.getElementById('intro-screen').style.opacity = '0';
+            const intro = document.getElementById('intro-screen');
+            intro.style.opacity = '0';
             setTimeout(() => {
-                document.getElementById('intro-screen').style.display = 'none';
+                intro.style.display = 'none';
                 document.getElementById('space-screen').style.display = 'flex';
-            }, 800);
+            }, 500);
         }, 5000);
 
         function openAppSpace() {
@@ -431,6 +444,8 @@
             
             document.getElementById('ad-modal').style.display = 'flex';
             let adTime = 5;
+            document.getElementById('ad-countdown').innerText = adTime;
+            
             let adInt = setInterval(() => {
                 adTime--;
                 document.getElementById('ad-countdown').innerText = adTime;
@@ -473,6 +488,7 @@
 
         function generateFakeWithdrawals() {
             const list = document.getElementById('fake-list');
+            if(!list) return;
             const users = ['@giorgi_9', '@crypto_v', '@nini_k', '@luka_m', '@beka_7'];
             list.innerHTML = '';
             for(let i=0; i<5; i++) {

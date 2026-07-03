@@ -1,120 +1,55 @@
 <!DOCTYPE html>
-<html lang="ka">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NTSR Miner Pro</title>
+    <title>NTSR Miner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        /* --- ძირითადი სტილები --- */
-        body { background: radial-gradient(circle, #1a1a1a 0%, #000000 100%); color: #fff; text-align: center; font-family: 'Courier New', Courier, monospace; margin: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; perspective: 1000px; }
-
-        /* --- 5 წამიანი Glitch Splash Screen --- */
-        #splash { position: fixed; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 1000; animation: fadeOutSplash 0.5s ease 5.5s forwards; }
+        body { background: #000; color: #fff; text-align: center; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
         
-        #splash-logo { width: 80%; max-width: 350px; object-fit: contain; filter: drop-shadow(0 0 20px #39ff14); animation: glitch 3s infinite, finalZoom 1s ease 4.5s forwards; }
+        /* 5 წამიანი შესავალი - image_2.png */
+        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 999; display: flex; align-items: center; justify-content: center; animation: hideSplash 0.5s ease 5s forwards; }
+        #splash img { width: 80%; max-width: 300px; }
+        @keyframes hideSplash { to { opacity: 0; visibility: hidden; } }
 
-        @keyframes glitch { 
-            2%, 64% { transform: translate(2px, 0) skew(0deg); opacity: 0.95; }
-            4%, 60% { transform: translate(-2px, 0) skew(0deg); opacity: 1; }
-            62% { transform: translate(0, 0) skew(5deg); }
-        }
-        @keyframes finalZoom { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2) translateY(-50px); opacity: 0; } }
-        @keyframes fadeOutSplash { to { opacity: 0; visibility: hidden; } }
-
-        /* --- მთავარი კონტენტი --- */
-        #main-content { display: flex; flex-direction: column; align-items: center; gap: 40px; opacity: 0; animation: fadeInMain 0.5s ease 5.5s forwards; }
-        @keyframes fadeInMain { to { opacity: 1; } }
-
-        #header-title { font-size: 24px; color: #d8b4fe; text-transform: uppercase; letter-spacing: 3px; margin: 0; text-shadow: 0 0 10px #d8b4fe; }
-        #balance { font-size: 50px; color: #39ff14; text-shadow: 0 0 20px #39ff14, 0 0 40px #39ff14; font-weight: bold; }
-
-        /* --- სუპერ დოლარის ღილაკი --- */
-        #coin-btn { background: none; border: none; padding: 0; cursor: pointer; transition: transform 0.2s ease; position: relative; }
-        #coin-btn:active { transform: scale(0.9) rotateX(10deg); }
-
-        #coin-img { width: 180px; height: 180px; object-fit: contain; filter: drop-shadow(0 0 25px rgba(57, 255, 20, 0.7)); transition: filter 0.3s; }
-        #coin-btn:active #coin-img { filter: drop-shadow(0 0 40px #fff); }
-
-        /* ანიმაცია დაჭერისას: ბრუნვა + ნაწილაკები */
-        .spinning { animation: spinDollar 0.6s ease-in-out; }
-        @keyframes spinDollar { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(1440deg); } }
-
-        /* ნაწილაკების ეფექტი (მონეტების ცვენა) */
-        .particle { position: absolute; font-size: 20px; color: #39ff14; pointer-events: none; animation: fallDown 1s linear forwards; opacity: 0; }
-        @keyframes fallDown { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100px) rotate(360deg); opacity: 0; } }
-
-        #hint { font-size: 14px; color: #888; text-transform: lowercase; }
+        /* წარწერები და ბალანსი - ნათელი ფერები */
+        h1 { color: #fff; font-size: 20px; margin-bottom: 10px; }
+        #balance { font-size: 40px; color: #00ff00; text-shadow: 0 0 15px #00ff00; margin-bottom: 30px; }
+        
+        /* დოლარის ღილაკი */
+        #coin-btn { background: none; border: none; padding: 0; cursor: pointer; }
+        #coin-img { width: 150px; height: 150px; border-radius: 50%; filter: drop-shadow(0 0 15px #ffd700); transition: transform 0.2s; }
+        .spin { animation: spin 0.8s linear; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- 5 წამიანი Glitch Splash Screen -->
     <div id="splash">
-        <!-- გამოიყენება შენი image_1.png ფაილი -->
-        <img id="splash-logo" src="image_1.png" alt="NTSR Logo">
+        <img src="image_2.png" alt="Logo">
     </div>
 
-    <!-- მთავარი ეკრანი (დამალულია სანამ splash არ დასრულდება) -->
-    <div id="main-content">
-        <h1 id="header-title">Crypto Balance</h1>
-        <div id="balance">0 NTSR</div>
-        
-        <button id="coin-btn" onclick="mine(event)">
-            <!-- შეგიძლია გამოიყენო ნებისმიერი მაღალი ხარისხის დოლარის სურათი -->
-            <img id="coin-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/United_States_one_dollar_bill%2C_obverse.jpg/800px-United_States_one_dollar_bill%2C_obverse.jpg" alt="Mine NTSR">
-        </button>
-        
-        <div id="hint">tap the dollar to mine</div>
-    </div>
+    <h1>NTSR Balance</h1>
+    <div id="balance">0 NTSR</div>
+    
+    <button id="coin-btn" onclick="mine()">
+        <img id="coin-img" src="https://upload.wikimedia.org/wikipedia/commons/4/45/US_one_dollar_bill%2C_obverse.jpg" alt="Mine">
+    </button>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        
-        let balance = parseInt(tg.CloudStorage.getItem('ntsr_balance')) || 0;
-        const balanceDisplay = document.getElementById('balance');
-        const coinBtn = document.getElementById('coin-btn');
-        const coinImg = document.getElementById('coin-img');
+        let balance = parseInt(localStorage.getItem('ntsr_balance')) || 0;
+        document.getElementById('balance').innerText = balance + ' NTSR';
 
-        balanceDisplay.innerText = balance + ' NTSR';
-
-        function mine(event) {
-            // 1. ბალანსის გაზრდა
+        function mine() {
+            let img = document.getElementById('coin-img');
+            img.classList.add('spin');
             balance++;
-            balanceDisplay.innerText = balance + ' NTSR';
-            tg.CloudStorage.setItem('ntsr_balance', balance.toString());
-
-            // 2. ანიმაციის დაწყება
-            coinImg.classList.remove('spinning');
-            void coinImg.offsetWidth; // ანიმაციის გადატვირთვა
-            coinImg.classList.add('spinning');
-
-            // 3. ნაწილაკების (მონეტების) ეფექტი
-            createParticles(event);
-        }
-
-        function createParticles(event) {
-            const colors = ['#39ff14', '#d8b4fe', '#fff'];
-            // შექმენი 5-7 მონეტა თითო დაჭერაზე
-            for (let i = 0; i < 6; i++) {
-                const particle = document.createElement('div');
-                particle.innerText = '$';
-                particle.className = 'particle';
-                particle.style.color = colors[Math.floor(Math.random() * colors.length)];
-                
-                // პოზიცია მაუსის ან თითის დაჭერის ადგილას
-                const x = event.clientX || event.touches[0].clientX;
-                const y = event.clientY || event.touches[0].clientY;
-                
-                particle.style.left = (x + (Math.random() - 0.5) * 50) + 'px';
-                particle.style.top = (y - 20) + 'px';
-                
-                document.body.appendChild(particle);
-                
-                // წაშალე ელემენტი ანიმაციის დასრულების შემდეგ
-                setTimeout(() => { particle.remove(); }, 1000);
-            }
+            document.getElementById('balance').innerText = balance + ' NTSR';
+            localStorage.setItem('ntsr_balance', balance);
+            setTimeout(() => { img.classList.remove('spin'); }, 800);
         }
     </script>
 </body>

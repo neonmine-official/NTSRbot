@@ -1,56 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="ka">
 <head>
     <meta charset="UTF-8">
     <title>NTSR Miner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        body { background: #000; color: #fff; text-align: center; font-family: Arial; margin: 0; }
+        body { background: #000; color: #fff; text-align: center; font-family: Arial; margin: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
         
-        /* 5 წამიანი შესავალი ეკრანი */
-        #splash { position: fixed; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 2000; animation: fadeOut 1s ease 5s forwards; }
+        /* 5 წამიანი შესავალი ეკრანი (Splash Screen) */
+        #splash { position: fixed; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 1000; animation: fadeOut 1s ease 5s forwards; }
         @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
         
-        #balance { font-size: 30px; color: #d8b4fe; margin: 20px; }
+        #splash-logo { width: 80%; max-width: 300px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+        /* მთავარი ეკრანის სტილები */
+        #main-content { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        #balance { font-size: 40px; color: #39ff14; text-shadow: 0 0 10px #39ff14; margin-bottom: 20px; }
         
-        /* ტრიალა დოლარი */
-        #coin { width: 100px; cursor: pointer; transition: transform 0.5s; }
-        .spin { animation: rotate 1s linear infinite; }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* ტრიალა დოლარის ღილაკი */
+        #coin-btn { background: none; border: none; padding: 0; cursor: pointer; transition: transform 0.2s; }
+        #coin-btn:active { transform: scale(0.95); }
+        #coin-img { width: 150px; height: 150px; object-fit: contain; filter: drop-shadow(0 0 15px #39ff14); }
+        
+        /* ტრიალის ანიმაცია */
+        .spinning { animation: spinCoin 0.8s linear; }
+        @keyframes spinCoin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+
+        #mining-text { font-size: 18px; color: #aaa; margin-top: 10px; }
     </style>
 </head>
 <body>
 
+    <!-- 5 წამიანი შესავალი ეკრანი (Splash Screen) -->
     <div id="splash">
-        <img src="7680fd0b-be00-4593-bcb3-cffc1f714a94.jpg" style="width: 200px;">
+        <!-- გამოიყენება შენი image_1.png ფაილი -->
+        <img id="splash-logo" src="image_1.png" alt="NTSR Logo">
     </div>
 
-    <h1>NTSR Miner</h1>
-    <div id="balance">0 NTSR</div>
-    
-    <!-- აქ ჩაასვი დოლარის სურათი ან გამოიყენე ემოჯი -->
-    <img id="coin" src="https://upload.wikimedia.org/wikipedia/commons/4/45/US_one_dollar_bill%2C_obverse.jpg" alt="Click to Mine">
+    <!-- მთავარი ეკრანი -->
+    <div id="main-content">
+        <div id="balance">0 NTSR</div>
+        
+        <!-- ღილაკი, რომელიც იტრიალებს -->
+        <button id="coin-btn" onclick="mine()">
+            <img id="coin-img" src="https://upload.wikimedia.org/wikipedia/commons/4/45/US_one_dollar_bill%2C_obverse.jpg" alt="Mine">
+        </button>
+        
+        <div id="mining-text">დააჭირე დოლარს ქოინების მოსაპოვებლად</div>
+    </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
+        // ტელეგრამის ინიციალიზაცია
         let tg = window.Telegram.WebApp;
         tg.expand();
-        let balance = 0;
-        let coin = document.getElementById('coin');
-        let balDisplay = document.getElementById('balance');
+        
+        let balance = parseInt(tg.CloudStorage.getItem('ntsr_balance')) || 0;
+        const balanceDisplay = document.getElementById('balance');
+        const coinBtn = document.getElementById('coin-btn');
+        const coinImg = document.getElementById('coin-img');
 
-        coin.onclick = () => {
-            coin.classList.add('spin'); // ტრიალის დაწყება
+        balanceDisplay.innerText = balance + ' NTSR';
+
+        function mine() {
+            // ანიმაციის დაწყება
+            coinImg.classList.add('spinning');
+            
+            // ბალანსის გაზრდა
             balance++;
-            balDisplay.innerText = balance + ' NTSR';
+            balanceDisplay.innerText = balance + ' NTSR';
             
-            // 1 წამში შეაჩერე ტრიალი
-            setTimeout(() => { coin.classList.remove('spin'); }, 1000);
-            
+            // ქოინის შენახვა
             tg.CloudStorage.setItem('ntsr_balance', balance.toString());
-        };
+            
+            // ანიმაციის გასუფთავება
+            setTimeout(() => {
+                coinImg.classList.remove('spinning');
+            }, 800);
+        }
     </script>
 </body>
 </html>
-გაიგზავნა
-შედგენა
-მისწერეთ

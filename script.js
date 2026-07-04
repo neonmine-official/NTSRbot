@@ -1,3 +1,19 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const loadingScreen = document.getElementById('loading-screen');
+    const video = document.getElementById('intro-video');
+
+    if (video) {
+        // როცა ვიდეო დასრულდება, ლოდინის ეკრანი გაქრება
+        video.onended = () => {
+            loadingScreen.style.display = 'none';
+        };
+        
+        // სარეზერვო ვარიანტი: 7 წამში მაინც გაქრეს (თუ ვიდეო დაზიანებულია)
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 7000);
+    }
+});
 // უსაფრთხო ჩატვირთვა
 (function() {
     const scoreDisplay = document.getElementById('score');

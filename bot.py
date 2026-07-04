@@ -1,4 +1,11 @@
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):welcome text=hello
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # მისალმება
+    await update.message.reply_text("გამარჯობა! მოხარული ვარ შენი გაცნობით.")
+    
+    # ღილაკი
+    keyboard = [[InlineKeyboardButton("თამაშის დაწყება", web_app=WebAppInfo(url=game_url))]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text("დააჭირე ღილაკს:", reply_markup=reply_markup)
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
@@ -20,6 +27,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):welcome text
 
 if _name_ == '_main_':
     app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(CommandHandler("hello", hello))hello
+    app.add_handler(CommandHandler("start", start))
     print("ბოტი გაშვებულია...")
     app.run_polling()

@@ -10,8 +10,7 @@
     function enterGame() {startScreen.style.display = 'none';
         gameScreen.style.display = 'flex';}
 
-    function incrementScore() {
-        score++;
+    function incrementScore() {score++;
         scoreElement.innerText = score;
         
         // 2. ქულის შენახვა localStorage-ში ყოველი დაჭერისას
@@ -20,14 +19,11 @@
         // ანიმაცია
         const coin = document.getElementById('game-coin');
         coin.style.transform = 'scale(0.95)';
-        setTimeout(() => { coin.style.transform = 'scale(1)'; }, 100);
-    }
+        setTimeout(() => { coin.style.transform = 'scale(1)'; }, 100);}
 
     // 3. როცა ტრანზაქცია შესრულდება, ბალანსი უნდა გაანულოთ:
-    function resetScoreAfterTransaction() {
-        score = 0;
+    function resetScoreAfterTransaction() {score = 0;
         localStorage.setItem('myScore', 0);
         scoreElement.innerText = 0;
-        alert("ტრანზაქცია წარმატებით შესრულდა!");
-    }
+        alert("ტრანზაქცია წარმატებით შესრულდა!");}
 </script>

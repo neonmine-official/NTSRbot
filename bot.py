@@ -2,7 +2,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppI
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 # აქ ჩასვით თქვენი ტოკენი ბრჭყალებში
-TOKEN = "აქ_ჩასვი_შენი_ტოკენი"
+TOKEN = "8503829547:AAHwP4kbfH0MQ22kIoyHrcNfQ5ulsbe2yzY"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # აქ ჩასვით თქვენი საიტის მისამართი (მაგალითად: https://yourusername.github.io/NTSRbot/)

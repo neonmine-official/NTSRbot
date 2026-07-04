@@ -1,0 +1,22 @@
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # თქვენი ვებ-აპლიკაციის ლინკი
+    game_url = "https://თქვენი-საიტის-ლინკი.com"
+    
+    # მარკეტინგული მისალმება
+    welcome_text = (
+        "🚀 *მოგესალმებით Neon Mine-ში!* 🚀\n\n"
+        "მზად ხართ გახდეთ ყველაზე მდიდარი მოთამაშე? 💰\n"
+        "ჩვენი პლატფორმა გთავაზობთ დაუვიწყარ გამოცდილებას და რეალურ შანსებს!\n\n"
+        "✅ დაიწყეთ თამაში ახლავე\n"
+        "✅ დააგროვეთ ქოინები\n"
+        "✅ გაუზიარეთ მეგობრებს\n\n"
+        "დააჭირეთ ქვემოთ მოცემულ ღილაკს და დაიწყეთ თავგადასავალი!"
+    )
+    
+    keyboard = [
+        [InlineKeyboardButton("🎮 თამაშის დაწყება", web_app=WebAppInfo(url=game_url))]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    
+    # გაგზავნა Markdown ფორმატში
+    await update.message.reply_text(welcome_text, reply_markup=reply_markup, parse_mode='Markdown')

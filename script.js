@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loadingScreen = document.getElementById('loading-screen');
     const video = document.getElementById('intro-video');
-
     if (video) {
         // როცა ვიდეო დასრულდება, ლოდინის ეკრანი გაქრება
         video.onended = () => {

@@ -7,7 +7,7 @@
     <style>
         body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
         
-        /* დასაწყისის ეკრანი (Loading/Welcome) - ფონად image_3.png */
+        /* დასაწყისის ეკრანი (Loading/Welcome) - ფონად logo.png */
         #start-screen {
             height: 100vh;
             background: url('image_3.png') no-repeat center center;
@@ -16,7 +16,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: white;
+            color: logo.png;
             text-align: center;
             position: absolute;
             top: 0;
@@ -42,7 +42,7 @@
         }
         #start-button:hover { background: #00ffff; color: #000; box-shadow: 0 0 25px rgba(0, 255, 255, 0.8); }
 
-        /* თამაშის ეკრანი - მთავარ ფონად image_4.png */
+        /* თამაშის ეკრანი - მთავარ ფონად logo.png.jpg */
         #game-screen {
             height: 100vh;
             background: url('image_4.png') no-repeat center center;
@@ -51,7 +51,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: white;
+            color: logo.png.jpg;
             position: absolute;
             top: 0;
             left: 0;
@@ -69,13 +69,13 @@
         #score { font-size: 48px; font-weight: bold; color: #00ffcc; text-shadow: 0 0 10px #00ffcc; }
         #score-label { font-size: 18px; opacity: 0.7; text-transform: uppercase; }
 
-        /* თამაშის რგოლი (Coin) - წრიული, შიგნით image_3.png */
+        /* თამაშის რგოლი (Coin) - წრიული, შიგნით logo.png */
         #game-coin {
             width: 250px;
             height: 250px;
             cursor: pointer;
             border-radius: 50%; /* სრულიად წრიული */
-            background: url('image_3.png') no-repeat center center;
+            background: url('logo.png') no-repeat center center;
             background-size: 150%; /* გადიდებულია, რომ ცენტრი გამოჩნდეს */
             border: 5px solid #00ffff; /* ნეონის ცისფერი ჩარჩო */
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.9), inset 0 0 20px rgba(0, 255, 255, 0.5);
@@ -120,7 +120,7 @@
             <span id="score">0</span><br>
             <span id="score-label">NTSR</span>
         </div>
-        <!-- აქ არის წრიული ქოინი, რომლის ფონადაც image_3.png გამოიყენება -->
+        <!-- აქ არის წრიული ქოინი, რომლის ფონადაც logo.png გამოიყენება -->
         <div id="game-coin" onclick="incrementScore()"></div>
         <p style="margin-top: 20px; color: #00ffff; text-shadow: 0 0 5px #00ffff;">დააჭირეთ ნეონ-რგოლს</p>
     </div>

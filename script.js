@@ -1,41 +1,40 @@
+// უსაფრთხო ჩატვირთვა
+(function() {
+    const scoreDisplay = document.getElementById('score');
 
-    // 1. 7 წამიანი ლოდინის ვიდეო ლოგიკა
-    const loadingScreen = document.getElementById('loading-screen');
+    // 1. ქულის აღდგენა (ფუნქცია)
+    function loadScore() {
+        try {
+            const saved = localStorage.getItem('myScore');
+            if (saved !== null && scoreDisplay) {
+                scoreDisplay.innerText = saved;
+            }
+        } catch (e) {
+            console.error("Local Storage-ზე წვდომა შეზღუდულია");
+        }
+    }
+
+    // 2. ქულის შენახვა (ფუნქცია)
+    window.incrementScore = function() {
+        try {
+            let current = parseInt(scoreDisplay.innerText) || 0;
+            let next = current + 1;
+            scoreDisplay.innerText = next;
+            localStorage.setItem('myScore', next.toString());
+        } catch (e) {
+            console.error("ქულის შენახვა ვერ მოხერხდა");
+        }
+    };
+
+    // 3. ვიდეოს ლოდინი
     const video = document.getElementById('intro-video');
+    const screen = document.getElementById('loading-screen');
 
     if (video) {
-        video.onended = () => {
-            if (loadingScreen) loadingScreen.style.display = 'none';
-        };
+        video.onended = () => { if(screen) screen.style.display = 'none'; };
+        setTimeout(() => { if(screen) screen.style.display = 'none'; }, 7500);
     }
-    // სარეზერვო გათიშვა
-    setTimeout(() => {
-        if (loadingScreen) loadingScreen.style.display = 'none';
-    }, 7500);
 
-    // 2. ქულების აღდგენის "რკინისებური" მეთოდი
-    const scoreElement = document.getElementById('score');
-    
-    // გვერდის ჩატვირთვისას წამოვიღოთ მონაცემი
-    let savedScore = localStorage.getItem('myScore');
-    if (scoreElement) {
-        scoreElement.innerText = savedScore !== null ? savedScore : "0";
-    }
-});
-
-// 3. ქულის მომატების ფუნქცია
-function incrementScore() {
-    const scoreElement = document.getElementById('score');
-    if (scoreElement) {
-        let currentScore = parseInt(scoreElement.innerText) || 0;
-        let newScore = currentScore + 1;
-        
-        // ეკრანზე გამოტანა
-        scoreElement.innerText = newScore;
-        
-        // ბრაუზერში შენახვა
-        localStorage.setItem('myScore', newScore);
-        
-        console.log("ქულა შენახულია: " + newScore);
-    }
-}
+    // გაშვება
+    loadScore();
+})();

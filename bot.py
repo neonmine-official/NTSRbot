@@ -4,7 +4,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 # აქ ჩასვით თქვენი ტოკენი ბრჭყალებში
 TOKEN = "8503829547:AAHwP4kbfH0MQ22kIoyHrcNfQ5ulsbe2yzY"
 
-async def start(update: Update, context: ContextTypes.hello):
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):welcome text=hello
     
     reply_markup = InlineKeyboardMarkup(keyboard)
     

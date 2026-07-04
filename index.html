@@ -3,71 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NTSR Mining</title>
+    <title>Neonmine Pro</title>
     <style>
-        body { margin: 0; background: #0f0f1a; color: white; font-family: Arial; text-align: center; }
-        .page { display: none; padding: 20px; }
-        .active { display: block; }
-        #splash { display: flex; align-items: center; justify-content: center; height: 100vh; font-size: 24px; color: #8A2BE2; }
-        .logo { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(to bottom, #7FFF00, #8A2BE2); margin: 20px; cursor: pointer; }
-        .btn { padding: 10px 20px; background: #8A2BE2; border: none; color: white; border-radius: 5px; cursor: pointer; }
+        :root { --neon-green: #7FFF00; --neon-purple: #8A2BE2; --bg: #0b0b15; }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; }
+        .page { display: none; height: 100vh; flex-direction: column; align-items: center; justify-content: center; }
+        .active { display: flex; }
+        
+        /* დიზაინი */
+        .neon-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px; border: 1px solid var(--neon-purple); text-align: center; }
+        .logo { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(to bottom, var(--neon-green), var(--neon-purple)); margin: 15px; cursor: pointer; box-shadow: 0 0 20px rgba(127, 255, 0, 0.3); transition: 0.3s; }
+        .logo:active { transform: scale(0.9); }
+        
+        /* მარკეტინგი */
+        .marketing { font-size: 0.9em; color: #aaa; margin-top: 10px; font-style: italic; }
+        .btn { padding: 12px 25px; margin: 10px; background: var(--neon-purple); border: none; border-radius: 25px; color: white; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <!-- ფაზა 1: Splash -->
-    <div id="splash">Neonmine Pro - Loading...</div>
+    <div id="splash" class="page active">
+        <h1 style="color: var(--neon-green)">NEONMINE PRO</h1>
+        <p>მაინინგი იწყება...</p>
+    </div>
 
     <!-- ფაზა 2: მთავარი გვერდი -->
     <div id="main-page" class="page">
-        <h1>NTSR Mining</h1>
-        <div class="logo" onclick="tapCoin()"></div> <!-- მექანიკური -->
-        <div class="logo" onclick="startAuto()"></div> <!-- ავტომატური -->
-        <button class="btn" onclick="buyBooster()">ბუსტერი (3 ვარსკვლავი)</button>
-        <p>ბალანსი: <span id="balance">0</span> NTSR</p>
-        <button class="btn" onclick="showPage('account-page')">ჩემი ანგარიში</button>
+        <div class="neon-box">
+            <h2>დაიწყე მაინინგი</h2>
+            <div class="logo" onclick="tapCoin()" title="დააკლიკე ქოინებისთვის"></div>
+            <div class="logo" onclick="startAuto()" title="ავტო-მაინინგი"></div>
+            <p class="marketing">"დააგროვე NTSR და მოხვდი ტოპ 1%-ში! დრო შეზღუდულია!"</p>
+            <button class="btn" onclick="buyBooster()">24სთ ბუსტერი (3★)</button>
+            <button class="btn" onclick="showPage('account-page')">ანგარიში და ბალანსი</button>
+        </div>
     </div>
 
     <!-- ფაზა 3: ანგარიში -->
     <div id="account-page" class="page">
-        <h1>ანგარიში</h1>
-        <p>შენი ქოინები: <span id="balance-acc">0</span> NTSR</p>
-        <button class="btn" onclick="showPage('main-page')">უკან</button>
+        <div class="neon-box">
+            <h2>შენი ციფრული საფულე</h2>
+            <p style="font-size: 2em;">NTSR: <span id="balance">0</span></p>
+            <p class="marketing">80% წილი ბაზრის ზრდაზე, 20% შენს აქტივობაზე.</p>
+            <button class="btn" onclick="showPage('main-page')">დაბრუნება</button>
+        </div>
     </div>
 
 <script>
     let balance = parseFloat(localStorage.getItem('ntsr_balance')) || 0;
-    let boosterActive = false;
-
-    // მონაცემების შენახვა
-    function save() { localStorage.setItem('ntsr_balance', balance); updateUI(); }
     
     function updateUI() {
         document.getElementById('balance').innerText = balance.toFixed(2);
-        document.getElementById('balance-acc').innerText = balance.toFixed(2);
-    }
-
-    function tapCoin() {
-        balance += boosterActive ? 2 : 1;
-        save();
-    }
-
-    function startAuto() {
-        alert("ავტომატური მაინინგი დაიწყო! დაბრუნდი 2 საათში.");
-        setTimeout(() => {
-            balance += boosterActive ? 20 : 10;
-            save();
-            alert("2 საათი გავიდა! ქოინები დაგერიცხა.");
-        }, 7200000); // 2 საათი
-    }
-
-    function buyBooster() {
-        if (balance >= 3) {
-            balance -= 3;
-            boosterActive = true;
-            setTimeout(() => { boosterActive = false; }, 86400000); // 24 საათი
-            save();
-        } else { alert("არასაკმარისი ვარსკვლავი!"); }
+        localStorage.setItem('ntsr_balance', balance);
     }
 
     function showPage(id) {
@@ -75,12 +63,12 @@
         document.getElementById(id).classList.add('active');
     }
 
-    // Splash-ის ლოგიკა
-    setTimeout(() => {
-        document.getElementById('splash').style.display = 'none';
-        showPage('main-page');
-        updateUI();
-    }, 5000);
+    function tapCoin() { balance += 1; updateUI(); }
+    function startAuto() { alert("ავტო-მაინინგი აქტიურია! (2 საათი)"); setTimeout(() => { balance += 50; updateUI(); }, 2000); }
+    function buyBooster() { if(balance >= 3) { balance -= 3; alert("ბუსტერი გააქტიურდა!"); updateUI(); } else { alert("არასაკმარისი ვარსკვლავი!"); } }
+
+    setTimeout(() => showPage('main-page'), 3000);
+    updateUI();
 </script>
 </body>
 </html>

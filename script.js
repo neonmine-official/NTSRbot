@@ -1,4 +1,4 @@
-
+document.addEventListener('DOMContentLoaded', () => {
     // 1. 7 წამიანი ლოდინის ვიდეო ლოგიკა
     const loadingScreen = document.getElementById('loading-screen');
     const video = document.getElementById('intro-video');
@@ -18,24 +18,24 @@
     
     // გვერდის ჩატვირთვისას წამოვიღოთ მონაცემი
     let savedScore = localStorage.getItem('myScore');
-    if (savedScore !== null) {
-        scoreElement.innerText = savedScore;
-    } else {
-        scoreElement.innerText = "0";
+    if (scoreElement) {
+        scoreElement.innerText = savedScore !== null ? savedScore : "0";
     }
 });
 
-// 3. ქულის მომატების ფუნქცია (გარეთ გამოტანილია, რომ ღილაკმა დაინახოს)
+// 3. ქულის მომატების ფუნქცია
 function incrementScore() {
-    let scoreElement = document.getElementById('score');
-    let currentScore = parseInt(scoreElement.innerText) || 0;
-    let newScore = currentScore + 1;
-    
-    // ეკრანზე გამოტანა
-    scoreElement.innerText = newScore;
-    
-    // ბრაუზერში შენახვა
-    localStorage.setItem('myScore', newScore);
-    
-    console.log("ქულა შენახულია: " + newScore); // შეამოწმეთ კონსოლში
+    const scoreElement = document.getElementById('score');
+    if (scoreElement) {
+        let currentScore = parseInt(scoreElement.innerText) || 0;
+        let newScore = currentScore + 1;
+        
+        // ეკრანზე გამოტანა
+        scoreElement.innerText = newScore;
+        
+        // ბრაუზერში შენახვა
+        localStorage.setItem('myScore', newScore);
+        
+        console.log("ქულა შენახულია: " + newScore);
+    }
 }

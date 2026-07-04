@@ -5,14 +5,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 TOKEN = "8503829547:AAHwP4kbfH0MQ22kIoyHrcNfQ5ulsbe2yzY"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # 1. აქ წერია მისალმების ტექსტი
-    welcome_text = "გამარჯობა! მოხარული ვარ შენი გაცნობით. აირჩიე მოქმედება:"
-    await update.message.reply_text(welcome_text)
     
-    # 2. აქ არის ღილაკის კოდი
-    keyboard = [
-        [InlineKeyboardButton("თამაშის დაწყება", web_app=WebAppInfo(url=game_url))]
-    ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
     # 3. ეს ტექსტი გამოჩნდება ღილაკთან ერთად

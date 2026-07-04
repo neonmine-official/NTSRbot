@@ -5,14 +5,18 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 TOKEN = "8503829547:AAHwP4kbfH0MQ22kIoyHrcNfQ5ulsbe2yzY"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # აქ ჩასვით თქვენი საიტის მისამართი (მაგალითად: https://neonmine-official.github.io/NTSRbot/"https://შენი-საიტის-ლინკი.com"
+    # 1. აქ წერია მისალმების ტექსტი
+    welcome_text = "გამარჯობა! მოხარული ვარ შენი გაცნობით. აირჩიე მოქმედება:"
+    await update.message.reply_text(welcome_text)
     
-    welcome_text = (
-        "🚀 *მოგესალმებით Neon Mine-ში!* 🚀\n\n"
-        "მზად ხართ გახდეთ ყველაზე მდიდარი მოთამაშე? 💰\n"
-        "დააჭირეთ ქვემოთ მოცემულ ღილაკს და დაიწყეთ თავგადასავალი!"
-    )
+    # 2. აქ არის ღილაკის კოდი
+    keyboard = [
+        [InlineKeyboardButton("თამაშის დაწყება", web_app=WebAppInfo(url=game_url))]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
     
+    # 3. ეს ტექსტი გამოჩნდება ღილაკთან ერთად
+    await update.message.reply_text("დააჭირე ღილაკს:", reply_markup=reply_markup)
     keyboard = [
         [InlineKeyboardButton("🎮 თამაშის დაწყება", web_app=WebAppInfo(url=game_url))]
     ]

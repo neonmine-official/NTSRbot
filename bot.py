@@ -1,3 +1,4 @@
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):welcome text=hello
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 

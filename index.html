@@ -8,7 +8,7 @@
         body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
         
         /* დასაწყისის ეკრანი (Loading/Welcome) - ფონად logo.png */
-        #start-screen {
+        #start-screen {logo.png}
             height: 100vh;
             background: url('logo.png') no-repeat center center;
             background-size: 150%;
@@ -43,7 +43,7 @@
         #start-button:hover { background: #00ffff; color: #000; box-shadow: 0 0 25px rgba(0, 255, 255, 0.8); }
 
         /* თამაშის ეკრანი - მთავარ ფონად logo.png.jpg */
-        #game-screen {
+        #game-screen {logo.png.jpg}
             height: 100vh;
             background: url('logo.png.jpg') no-repeat center center;
             background-size: cover;
@@ -69,14 +69,14 @@
         #score { font-size: 48px; font-weight: bold; color: #00ffcc; text-shadow: 0 0 10px #00ffcc; }
         #score-label { font-size: 18px; opacity: 0.7; text-transform: uppercase; }
 
-        /* თამაშის რგოლი (Coin) - წრიული, შიგნით logo.png */
+        /* თამაშის რგოლი (Coin) - წრიული, შიგნით logo.png.jpg */
         #game-coin {
             width: 250px;
             height: 250px;
             cursor: pointer;
-            border-radius: 50%; /* სრულიად წრიული */
+            border-radius: 150%; /* სრულიად წრიული */
             background: url('logo.png') no-repeat center center;
-            background-size: 150%; /* გადიდებულია, რომ ცენტრი გამოჩნდეს */
+            background-size: 70%; /* გადიდებულია, რომ ცენტრი გამოჩნდეს */
             border: 5px solid #00ffff; /* ნეონის ცისფერი ჩარჩო */
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.9), inset 0 0 20px rgba(0, 255, 255, 0.5);
             transition: transform 0.1s ease, box-shadow 0.1s ease;
@@ -93,7 +93,7 @@
             position: absolute;
             width: 90%;
             height: 90%;
-            border-radius: 50%;
+            border-radius: 100%;
             border: 2px solid rgba(255, 255, 255, 0.3);
             animation: pulse 2s infinite;
         }
@@ -110,7 +110,7 @@
     <!-- დასაწყისის ეკრანი (Load/Welcome) -->
     <div id="start-screen">
         <h1>NEONMINE PRO NTSR_COINS</h1>
-        </h1>money</h1>
+        </h1>logo.png</h1>
         <p>მზად ხართ მაინინგისთვის?</p>
         <button id="start-button" onclick="enterGame()">დაწყება</button>
     </div>

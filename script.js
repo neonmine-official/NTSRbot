@@ -1,28 +1,41 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. 7 წამიანი ლოდინის ვიდეო ლოგიკა
+    const loadingScreen = document.getElementById('loading-screen');
+    const video = document.getElementById('intro-video');
 
-    // 1. 7 წამიანი ლოდინი
+    if (video) {
+        video.onended = () => {
+            if (loadingScreen) loadingScreen.style.display = 'none';
+        };
+    }
+    // სარეზერვო გათიშვა
     setTimeout(() => {
-        const loading = document.getElementById('loading-screen');
-        if (loading) loading.style.display = 'none';
-    }, 7000);
+        if (loadingScreen) loadingScreen.style.display = 'none';
+    }, 7500);
 
-    // 2. გვერდის ჩატვირთვისას, ამოიღეთ შენახული ქულა localStorage-დან
-    const savedScore = localStorage.getItem('myScore');
+    // 2. ქულების აღდგენის "რკინისებური" მეთოდი
+    const scoreElement = document.getElementById('score');
+    
+    // გვერდის ჩატვირთვისას წამოვიღოთ მონაცემი
+    let savedScore = localStorage.getItem('myScore');
     if (savedScore !== null) {
-        document.getElementById('score').innerText = savedScore;
+        scoreElement.innerText = savedScore;
+    } else {
+        scoreElement.innerText = "0";
     }
 });
 
+// 3. ქულის მომატების ფუნქცია (გარეთ გამოტანილია, რომ ღილაკმა დაინახოს)
 function incrementScore() {
-    // 3. მიიღეთ მიმდინარე ქულა ეკრანიდან
-    let currentScore = parseInt(document.getElementById('score').innerText);
+    let scoreElement = document.getElementById('score');
+    let currentScore = parseInt(scoreElement.innerText) || 0;
     let newScore = currentScore + 1;
     
-    // 4. განაახლეთ ეკრანი
-    document.getElementById('score').innerText = newScore;
+    // ეკრანზე გამოტანა
+    scoreElement.innerText = newScore;
     
-    // 5. შეინახეთ ახალი ქულა localStorage-ში, რომ არ წაიშალოს
+    // ბრაუზერში შენახვა
     localStorage.setItem('myScore', newScore);
+    
+    console.log("ქულა შენახულია: " + newScore); // შეამოწმეთ კონსოლში
 }
-გაიგზავნა
-შედგენა
-მისწერეთ

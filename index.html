@@ -87,3 +87,32 @@ json
   "url": "https://თქვენი-საიტი.com",
   "name": "NTSR MINING",
   "iconUrl": "https://თქვენი-საიტი.com/logo.png"
+<<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <title>ჩემი თამაში</title>
+    <style>
+        body { text-align: center; font-family: sans-serif; background: #222; color: white; }
+        #coin { width: 200px; height: 200px; cursor: pointer; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <h1>ქოინები: <span id="score">0</span></h1>
+    
+    <!-- აქ ჩასვი შენი სურათის სახელი (მაგ: my-coin.png) -->
+    <img id="coin" src="https://via.placeholder.com/200" alt="Coin">
+
+    <script>
+        let score = 0;
+        const coin = document.getElementById('coin');
+        const scoreDisplay = document.getElementById('score');
+
+        coin.addEventListener('click', () => {
+            score++;
+            scoreDisplay.innerText = score;
+        });
+    </script>
+</body>
+</html>

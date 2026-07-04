@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+
     // 1. 7 წამიანი ლოდინის ვიდეო ლოგიკა
     const loadingScreen = document.getElementById('loading-screen');
     const video = document.getElementById('intro-video');

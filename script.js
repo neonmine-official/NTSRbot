@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+
     // 1. 7 წამიანი ლოდინი
     setTimeout(() => {
         const loading = document.getElementById('loading-screen');

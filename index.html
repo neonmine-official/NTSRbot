@@ -149,4 +149,33 @@
     </script>
 </body>
 </html>
-<script src="script.js"></script></body>
+<script src="script.js"></script></body><script>
+    // 1. ფუნქცია, რომელიც ზრდის ქულას და ინახავს ბრაუზერის მეხსიერებაში
+    function incrementScore() {
+        // წავიკითხოთ მიმდინარე ქულა, თუ არაფერია - დავიწყოთ 0-ით
+        let currentScore = localStorage.getItem('myScore');
+        let score = currentScore ? parseInt(currentScore) : 0;
+        
+        // გავზარდოთ ერთით
+        score = score + 1;
+        
+        // შევინახოთ ახალი მნიშვნელობა
+        localStorage.setItem('myScore', score);
+        
+        // განვაახლოთ ეკრანზე გამოჩენილი ციფრი
+        const display = document.getElementById('score');
+        if (display) {
+            display.innerText = score;
+        }
+    }
+
+    // 2. ეს ფუნქცია დარწმუნდება, რომ გვერდის ჩატვირთვისას ქულა თავისით გამოჩნდება
+    window.addEventListener('DOMContentLoaded', (event) => {
+        let savedScore = localStorage.getItem('myScore');
+        const display = document.getElementById('score');
+        
+        if (savedScore && display) {
+            display.innerText = savedScore;
+        }
+    });
+</script>

@@ -2,150 +2,84 @@
 <html lang="ka">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NeonMine Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neonmine Pro</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
+        :root { --neon-green: #7FFF00; --neon-purple: #8A2BE2; --bg: #0b0b15; }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; }
+        .page { display: none; height: 100vh; flex-direction: column; align-items: center; justify-content: center; }
+        .active { display: flex; }
         
-        /* დასაწყისის ეკრანი (Loading/Welcome) - ფონად logo.png */
-        #start-screen {
-            height: 100vh;
-            background: url('image_3.png') no-repeat center center;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: logo.png;
-            text-align: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 10;
-        }
-        #start-screen h1 { margin-top: 200px; font-size: 32px; text-shadow: 0 0 10px rgba(0, 255, 255, 0.8); }
-        #start-screen p { font-size: 16px; opacity: 0.8; }
-        #start-button {
-            margin-top: 50px;
-            padding: 15px 40px;
-            font-size: 22px;
-            cursor: pointer;
-            border-radius: 30px;
-            border: 2px solid #00ffff;
-            background: transparent;
-            color: #00ffff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-        }
-        #start-button:hover { background: #00ffff; color: #000; box-shadow: 0 0 25px rgba(0, 255, 255, 0.8); }
-
-        /* თამაშის ეკრანი - მთავარ ფონად logo.png.jpg */
-        #game-screen {
-            height: 100vh;
-            background: url('image_4.png') no-repeat center center;
-            background-size: cover;
-            display: none; /* თავიდან დამალულია */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: logo.png.jpg;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 5;
-        }
-        #score-container {
-            position: absolute;
-            top: 50px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 10px 20px;
-            border-radius: 15px;
-            border: 1px solid #333;
-        }
-        #score { font-size: 48px; font-weight: bold; color: #00ffcc; text-shadow: 0 0 10px #00ffcc; }
-        #score-label { font-size: 18px; opacity: 0.7; text-transform: uppercase; }
-
-        /* თამაშის რგოლი (Coin) - წრიული, შიგნით logo.png */
-        #game-coin {
-            width: 250px;
-            height: 250px;
-            cursor: pointer;
-            border-radius: 50%; /* სრულიად წრიული */
-            background: url('logo.png') no-repeat center center;
-            background-size: 150%; /* გადიდებულია, რომ ცენტრი გამოჩნდეს */
-            border: 5px solid #00ffff; /* ნეონის ცისფერი ჩარჩო */
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.9), inset 0 0 20px rgba(0, 255, 255, 0.5);
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-            margin-top: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #game-coin:active { transform: scale(0.95); box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); }
+        /* დიზაინი */
+        .neon-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px; border: 1px solid var(--neon-purple); text-align: center; }
+        .logo { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(to bottom, var(--neon-green), var(--neon-purple)); margin: 15px; cursor: pointer; box-shadow: 0 0 20px rgba(127, 255, 0, 0.3); transition: 0.3s; }
+        .logo:active { transform: scale(0.9); }
         
-        /* ვიზუალური ეფექტი ქოინზე (შიდა ციმციმი) */
-        #game-coin::after {
-            content: '';
-            position: absolute;
-            width: 90%;
-            height: 90%;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); opacity: 0.5; }
-            70% { transform: scale(1.1); opacity: 0.3; }
-            100% { transform: scale(0.95); opacity: 0.5; }
-        }
+        /* მარკეტინგი */
+        .marketing { font-size: 0.9em; color: #aaa; margin-top: 10px; font-style: italic; }
+        .btn { padding: 12px 25px; margin: 10px; background: var(--neon-purple); border: none; border-radius: 25px; color: white; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- დასაწყისის ეკრანი (Load/Welcome) -->
-    <div id="start-screen">
-        <h1>NEONMINE PRO</h1>
-        <p>მზად ხართ მაინინგისთვის?</p>
-        <button id="start-button" onclick="enterGame()">დაწყება</button>
+    <!-- ფაზა 1: Splash -->
+    <div id="splash" class="page active">
+        <h1 style="color: var(--neon-green)">NEONMINE PRO</h1>
+        <p>მაინინგი იწყება...</p>
     </div>
 
-    <!-- თამაშის ეკრანი -->
-    <div id="game-screen">
-        <div id="score-container">
-            <span id="score">0</span><br>
-            <span id="score-label">NTSR</span>
+    <!-- ფაზა 2: მთავარი გვერდი -->
+    <div id="main-page" class="page">
+        <div class="neon-box">
+            <h2>დაიწყე მაინინგი</h2>
+            <div class="logo" onclick="tapCoin()" title="დააკლიკე ქოინებისთვის"></div>
+            <div class="logo" onclick="startAuto()" title="ავტო-მაინინგი"></div>
+            <p class="marketing">"დააგროვე NTSR და მოხვდი ტოპ 1%-ში! დრო შეზღუდულია!"</p>
+            <button class="btn" onclick="buyBooster()">24სთ ბუსტერი (3★)</button>
+            <button class="btn" onclick="showPage('account-page')">ანგარიში და ბალანსი</button>
         </div>
-        <!-- აქ არის წრიული ქოინი, რომლის ფონადაც logo.png გამოიყენება -->
-        <div id="game-coin" onclick="incrementScore()"></div>
-        <p style="margin-top: 20px; color: #00ffff; text-shadow: 0 0 5px #00ffff;">დააჭირეთ ნეონ-რგოლს</p>
     </div>
 
-    <script>
-        let score = 0;
-        const scoreElement = document.getElementById('score');
-        const startScreen = document.getElementById('start-screen');
-        const gameScreen = document.getElementById('game-screen');
+    <!-- ფაზა 3: ანგარიში -->
+    <div id="account-page" class="page">
+        <div class="neon-box">
+            <h2>შენი ციფრული საფულე</h2>
+            <p style="font-size: 2em;">NTSR: <span id="balance">0</span></p>
+            <p class="marketing">დააგროვე 200 000 NTSR ქოინი პრიზის მისაღებად.</p>
+            <button class="btn" onclick="showPage('main-page')">დაბრუნება</button>
+        </div>
+    </div>
 
-        function enterGame() {
-            startScreen.style.display = 'none';
-            gameScreen.style.display = 'flex';
-        }
+<script>
+    let balance = parseFloat(localStorage.getItem('ntsr_balance')) || 0;
+    
+    function updateUI() {
+        document.getElementById('balance').innerText = balance.toFixed(2);
+        localStorage.setItem('ntsr_balance', balance);
+    }
 
-        function incrementScore() {
-            score++;
-            scoreElement.innerText = score;
-            // დამატებითი ანიმაცია JS-ით (სურვილისამებრ)
-            const coin = document.getElementById('game-coin');
-            coin.style.boxShadow = '0 0 10px rgba(0, 255, 255, 0.5)';
-            setTimeout(() => {
-                coin.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.9), inset 0 0 20px rgba(0, 255, 255, 0.5)';
-            }, 50);
-        }
-    </script>
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function tapCoin() { balance += 1; updateUI(); }
+    function startAuto() { alert("ავტო-მაინინგი აქტიურია! (2 საათი)"); setTimeout(() => { balance += 50; updateUI(); }, 2000); }
+    function buyBooster() { if(balance >= 3) { balance -= 3; alert("ბუსტერი გააქტიურდა!"); updateUI(); } else { alert("არასაკმარისი ვარსკვლავი!"); } }
+
+    setTimeout(() => showPage('main-page'), 3000);
+    updateUI();
+</script>
 </body>
 </html>
+<<!-- ეს ჩასვით index.html-ში -->
+<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+
+<div id="ton-connect"></div>
+
+<script>
+    const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://თქვენი-საიტი.com/tonconnect-manifest.json',
+        buttonRootId: 'ton-connect'
+    });
+</script>

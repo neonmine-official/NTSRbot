@@ -20,6 +20,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):welcome text
 
 if _name_ == '_main_':
     app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("hello", start))
     print("ბოტი გაშვებულია...")
     app.run_polling()

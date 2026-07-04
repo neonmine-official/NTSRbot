@@ -1,92 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ka">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NTSR Miner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NTSR Mining</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; user-select: none; }
-        body { background-color: #060214; color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-
-        /* 🎬 1. ინტრო */
-        #intro-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, #1a0933 0%, #060214 100%); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease-in-out; }
-        .intro-logo { width: 100px; height: 100px; background: #00ff66; border-radius: 50%; box-shadow: 0 0 50px #00ff66; display: flex; justify-content: center; align-items: center; font-size: 50px; }
-        .intro-text { margin-top: 25px; font-size: 24px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 15px #00ff66; }
-
-        /* 🔮 მაინერი - დოლარის ანიმაცია */
-        .wheel-container { position: relative; width: 250px; height: 250px; display: flex; justify-content: center; align-items: center; }
-        .neon-orb { width: 240px; height: 240px; border-radius: 50%; border: 4px dashed #00ff66; position: absolute; }
-        .neon-orb.spinning { animation: spin 2s linear infinite; border-style: solid; border-color: #00ff66 transparent #8b5cf6 transparent; }
-        
-        .orb-core { width: 180px; height: 180px; border-radius: 50%; background: #12072b; border: 4px solid #8b5cf6; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; z-index: 10; transition: transform 0.3s; }
-        .dollar-icon { font-size: 60px; color: #00ff66; text-shadow: 0 0 20px #00ff66; }
-        .spinning-dollar { animation: spinDollar 1s linear infinite; }
-
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes spinDollar { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
-
-        /* სხვა სტილები იგივე დარჩა... */
-        #main-app { display: none; flex-direction: column; align-items: center; justify-content: space-between; height: 100vh; padding: 20px 15px 90px 15px; }
-        .coin-balance { font-size: 45px; font-weight: 900; color: #ffffff; text-shadow: 0 0 20px #00ff66; }
-        .bottom-navbar { position: fixed; bottom: 0; width: 100%; height: 70px; background: #0a041c; border-top: 2px solid #8b5cf6; display: flex; justify-content: space-around; align-items: center; }
-        .nav-column.active { color: #00ff66; }
+        body { margin: 0; background: #0f0f1a; color: white; font-family: Arial; text-align: center; }
+        .page { display: none; padding: 20px; }
+        .active { display: block; }
+        #splash { display: flex; align-items: center; justify-content: center; height: 100vh; font-size: 24px; color: #8A2BE2; }
+        .logo { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(to bottom, #7FFF00, #8A2BE2); margin: 20px; cursor: pointer; }
+        .btn { padding: 10px 20px; background: #8A2BE2; border: none; color: white; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <!-- 1. ინტრო -->
-    <div id="intro-screen">
-        <div class="intro-logo">⚡</div>
-        <div class="intro-text">NTSR Miner</div>
+    <!-- ფაზა 1: Splash -->
+    <div id="splash">Neonmine Pro - Loading...</div>
+
+    <!-- ფაზა 2: მთავარი გვერდი -->
+    <div id="main-page" class="page">
+        <h1>NTSR Mining</h1>
+        <div class="logo" onclick="tapCoin()"></div> <!-- მექანიკური -->
+        <div class="logo" onclick="startAuto()"></div> <!-- ავტომატური -->
+        <button class="btn" onclick="buyBooster()">ბუსტერი (3 ვარსკვლავი)</button>
+        <p>ბალანსი: <span id="balance">0</span> NTSR</p>
+        <button class="btn" onclick="showPage('account-page')">ჩემი ანგარიში</button>
     </div>
 
-    <!-- 3. მთავარი -->
-    <div id="main-app" style="display: flex;">
-        <div class="top-bar">
-            <h3>BALANCE</h3>
-            <div class="coin-balance"><span id="coin-amount">0.0000</span> <span style="font-size:20px; color:#00ff66;">NTSR</span></div>
-        </div>
-
-        <div class="wheel-container">
-            <div class="neon-orb" id="orb-animation"></div>
-            <div class="orb-core" id="start-mine-btn">
-                <div class="dollar-icon" id="dollar-img">$</div>
-                <div class="timer-text" id="mining-timer">READY</div>
-            </div>
-        </div>
-
-        <div class="bottom-navbar">
-            <div class="nav-column active"><span>🔄 NTSR MINER</span></div>
-        </div>
+    <!-- ფაზა 3: ანგარიში -->
+    <div id="account-page" class="page">
+        <h1>ანგარიში</h1>
+        <p>შენი ქოინები: <span id="balance-acc">0</span> NTSR</p>
+        <button class="btn" onclick="showPage('main-page')">უკან</button>
     </div>
 
-    <script>
-        let coins = 0.0000;
-        let isMining = false;
+<script>
+    let balance = parseFloat(localStorage.getItem('ntsr_balance')) || 0;
+    let boosterActive = false;
 
-        // ინტრო ანიმაცია
-        setTimeout(() => { document.getElementById('intro-screen').style.opacity = '0'; 
-            setTimeout(() => { document.getElementById('intro-screen').style.display = 'none'; }, 500); 
-        }, 3000);
+    // მონაცემების შენახვა
+    function save() { localStorage.setItem('ntsr_balance', balance); updateUI(); }
+    
+    function updateUI() {
+        document.getElementById('balance').innerText = balance.toFixed(2);
+        document.getElementById('balance-acc').innerText = balance.toFixed(2);
+    }
 
-        document.getElementById('start-mine-btn').addEventListener('click', () => {
-            if (isMining) return;
-            isMining = true;
-            document.getElementById('orb-animation').classList.add('spinning');
-            document.getElementById('dollar-img').classList.add('spinning-dollar');
-            
-            let mInt = setInterval(() => {
-                coins += 0.0050;
-                document.getElementById('coin-amount').innerText = coins.toFixed(4);
-            }, 500);
+    function tapCoin() {
+        balance += boosterActive ? 2 : 1;
+        save();
+    }
 
-            setTimeout(() => {
-                clearInterval(mInt);
-                isMining = false;
-                document.getElementById('orb-animation').classList.remove('spinning');
-                document.getElementById('dollar-img').classList.remove('spinning-dollar');
-            }, 5000);
-        });
-    </script>
+    function startAuto() {
+        alert("ავტომატური მაინინგი დაიწყო! დაბრუნდი 2 საათში.");
+        setTimeout(() => {
+            balance += boosterActive ? 20 : 10;
+            save();
+            alert("2 საათი გავიდა! ქოინები დაგერიცხა.");
+        }, 7200000); // 2 საათი
+    }
+
+    function buyBooster() {
+        if (balance >= 3) {
+            balance -= 3;
+            boosterActive = true;
+            setTimeout(() => { boosterActive = false; }, 86400000); // 24 საათი
+            save();
+        } else { alert("არასაკმარისი ვარსკვლავი!"); }
+    }
+
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    // Splash-ის ლოგიკა
+    setTimeout(() => {
+        document.getElementById('splash').style.display = 'none';
+        showPage('main-page');
+        updateUI();
+    }, 5000);
+</script>
 </body>
 </html>

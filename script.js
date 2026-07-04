@@ -7,10 +7,8 @@
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
 
-    function enterGame() {
-        startScreen.style.display = 'none';
-        gameScreen.style.display = 'flex';
-    }
+    function enterGame() {startScreen.style.display = 'none';
+        gameScreen.style.display = 'flex';}
 
     function incrementScore() {
         score++;

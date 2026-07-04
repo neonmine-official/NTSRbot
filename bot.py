@@ -5,8 +5,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 TOKEN = "8503829547:AAHwP4kbfH0MQ22kIoyHrcNfQ5ulsbe2yzY"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # აქ ჩასვით თქვენი საიტის მისამართი (მაგალითად: https://yourusername.github.io/NTSRbot/)
-    game_url = "https://შენი-საიტის-ლინკი.com"
+    # აქ ჩასვით თქვენი საიტის მისამართი (მაგალითად: https://neonmine-official.github.io/NTSRbot/"https://შენი-საიტის-ლინკი.com"
     
     welcome_text = (
         "🚀 *მოგესალმებით Neon Mine-ში!* 🚀\n\n"
